@@ -1,0 +1,90 @@
+<% provide(:title, 'Payment Receipts') %>
+
+<% if @users_current_payments.count < 1 %>
+
+  <h2> Please pay your $35 application fee.</h2>
+  <h6>Pay by Credit Card (Visa, Mastercard, Discover, AMEX)</h6>
+  <p>
+    You will be redirected to
+    our credit card processing page where you will be asked to make your
+    non-refundable $35 application fee. Payments are securely processed via QuikPAY,
+    the preferred gateway service provider of the University of Michigan.
+    QuikPAY is a registered trademark of Nelnet Business Solutions, Inc. No
+    credit card information is stored on our servers.
+
+    <%= button_to "Pay application fee", make_payment_path, params: {amount: 35}, class: 'btn btn-sm btn-success' %>
+  </p>
+<% else %>
+  <h2> Your Payment Receipts</h2>
+  <p> 
+    You are required to pay the $35 application fee. If you are 
+    accepted into the NELP program you are also required to pay an additional 
+    deposit of $500 (usually spread over two payments of $250 each).
+  </p>
+  <p>  
+    There are other costs associated with the NELP program that are outlined
+    <%= link_to "here", 'https://lsa.umich.edu/nelp/prospective-students/cost-financial-aid.html' %>
+    </p>
+  <p>
+    You may email any questions to
+    <%= mail_to 'aknuth@umich.edu' %>
+  </p>
+  <hr class"w-75">
+
+  <div>
+    <p>
+      Account Summary
+    <div>
+      <p>
+        <%= "#{'total_cost'.humanize.ljust(24, '.')} #{number_to_currency(@total_cost).rjust(12,'.')}" %>
+      </p>
+      <p>
+        <%= "#{'amount_paid'.humanize.ljust(20, '.')} #{number_to_currency(@ttl_paid).rjust(12,'.')}" %>
+      </p>
+      <hr>
+      <p>
+        <%= "#{'balance_due'humanize.ljust(22, '.')} #{number_to_currency(@balance_due).rjust(12,'.')}" %>
+      </p>
+    </div>
+    <div>
+      <%= form_with url: make_payment_path, local: true do |f| %>
+      <div>
+        $
+        <%= f.number_field :amount, value: "#{@balance_due.to_i}", within: 1..250, required: true %>
+        <%= f.submit "Pay Now", class: 'btn btn-sm btn-success ml-2' %>
+      </div>
+    </div>
+  </div>
+  <hr class"w-75">
+  <H2>Your transactions:</h2>
+  <div>
+    <% @users_current_payments.each do |payment| %>
+    <p>
+            <%= "Transaction ID: #{payment.transaction_id}" %>
+    </p>
+    <p>
+      <ul>
+        <li>>
+              <%= "Credit Card: #{payment.account_type}" %>
+        </li>
+        <li>>Message:
+              %br
+              <%= payment.result_message %>
+        </li>
+        <li>
+              <%= "Amount: #{number_to_currency(payment.total_amount.to_f / 100 )}" %>
+        </li>
+        <li>
+              <%= "Date: #{Time.parse(payment.transaction_date).strftime("%b %e, %Y at %l:%M %p")}" %>
+        </li>
+      </ul>
+    </p>
+  </div>
+  <p>
+    You will receive an email confirmation from
+    'MerchantCreditCard&#64;umich.edu' for each transaction.
+  </p>
+  <p>
+    You may email any questions to
+    <%= mail_to 'aknuth@umich.edu' %>
+  </p>
