@@ -18,6 +18,7 @@ x-app: &app
     BOOTSNAP_CACHE_DIR: /usr/src/bootsnap
     HISTFILE: /usr/src/app/log/.bash_history
     PSQL_HISTFILE: /usr/src/app/log/.psql_history
+    EDITOR: ${EDITOR}
   volumes:
     - .:/usr/src/app:cached
     - bundler:/usr/local/bundle:delegated
