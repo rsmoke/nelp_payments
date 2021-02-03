@@ -9,7 +9,6 @@ Static pages for
 - ```git clone <repo>```
 - ```cd <app directory>```
 - ```docker-compose run --rm web bundle```
-- edit database.yml to reflect name of your application
 - ```docker-compose run --rm web rails db:create```
 - ```docker-compose run --rm web rails db:migrate```
 - ```docker-compose run --rm web yarn```
