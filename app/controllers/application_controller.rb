@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
     def current_program_year
         @current_program_year ||= ProgramSetting.active_program.program_year
+    rescue
+        flash.now[:alert] = "Need to create a program setting!"
     end
 
     helper_method :current_program_year
