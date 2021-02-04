@@ -18,4 +18,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :payments
+
+  def display_name
+    self.email
+  end
 end
