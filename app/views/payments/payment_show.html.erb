@@ -24,12 +24,12 @@
   <p>  
     There are other costs associated with the NELP program that are outlined
     <%= link_to "here", 'https://lsa.umich.edu/nelp/prospective-students/cost-financial-aid.html' %>
-    </p>
+  </p>
   <p>
     You may email any questions to
     <%= mail_to 'aknuth@umich.edu' %>
   </p>
-  <hr class"w-75">
+  <hr class="w-75">
 
   <div>
     <p>
@@ -43,7 +43,7 @@
       </p>
       <hr>
       <p>
-        <%= "#{'balance_due'humanize.ljust(22, '.')} #{number_to_currency(@balance_due).rjust(12,'.')}" %>
+        <%= "#{'balance_due'.humanize.ljust(22, '.')} #{number_to_currency(@balance_due).rjust(12,'.')}" %>
       </p>
     </div>
     <div>
@@ -53,22 +53,23 @@
         <%= f.number_field :amount, value: "#{@balance_due.to_i}", within: 1..250, required: true %>
         <%= f.submit "Pay Now", class: 'btn btn-sm btn-success ml-2' %>
       </div>
+      <% end %>
     </div>
   </div>
-  <hr class"w-75">
+  <hr class="w-75">
   <H2>Your transactions:</h2>
   <div>
     <% @users_current_payments.each do |payment| %>
     <p>
-            <%= "Transaction ID: #{payment.transaction_id}" %>
+      <%= "Transaction ID: #{payment.transaction_id}" %>
     </p>
     <p>
       <ul>
         <li>>
               <%= "Credit Card: #{payment.account_type}" %>
         </li>
-        <li>>Message:
-              %br
+        <li>Message:
+              <br>
               <%= payment.result_message %>
         </li>
         <li>
@@ -79,11 +80,13 @@
         </li>
       </ul>
     </p>
+    <% end %>
   </div>
   <p>
     You will receive an email confirmation from
     'MerchantCreditCard&#64;umich.edu' for each transaction.
   </p>
+<% end %>
   <p>
     You may email any questions to
     <%= mail_to 'aknuth@umich.edu' %>

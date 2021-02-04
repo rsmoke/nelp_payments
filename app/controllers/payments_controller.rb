@@ -31,7 +31,8 @@ class PaymentsController < ApplicationController
         payer_identity: current_user.email,
         timestamp: params['timestamp'],
         transaction_hash: params['hash'],
-        user_id: current_user.id
+        user_id: current_user.id,
+        program_year: @current_program_year
       )
 
       redirect_to all_payments_path, notice: "Your Payment Was Successfully Recorded"
@@ -45,14 +46,14 @@ class PaymentsController < ApplicationController
 
   def payment_show
     @total_cost = 535
-    @users_current_payments = Payment.for_current_registration_period.where(user_id: current_user )
-    @ttl_paid = Payment.for_current_registration_period.where(user_id: current_user, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+    @users_current_payments = Payment.where(program_year: @current_program_year, user_id: current_user )
+    @ttl_paid = Payment.where(program_year: @current_program_year, user_id: current_user, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
     @balance_due = @total_cost - @ttl_paid
   end
 
   private
     def generate_hash(current_user, amount=35)
-      user_account = current_user.email_address.partition('@').first + '-' + current_user.id.to_s
+      user_account = current_user.email.partition('@').first + '-' + current_user.id.to_s
       redirect_url = 'https://lsa-english-nelp.miserver.it.umich.edu/payment_receipt'
       amount_to_be_payed = amount.to_i
       if Rails.env.development? || Rails.application.credentials.NELNET_SERVICE[:SERVICE_SELECTOR] == "QA"
@@ -92,7 +93,7 @@ class PaymentsController < ApplicationController
     end
 
     def url_params
-      params.permit(:amount, :transactionType, :transactionStatus, :transactionId, :transactionTotalAmount, :transactionDate, :transactionAcountType, :transactionResultCode, :transactionResultMessage, :orderNumber, :timestamp, :hash)
+      params.permit(:amount, :transactionType, :transactionStatus, :transactionId, :transactionTotalAmount, :transactionDate, :transactionAcountType, :transactionResultCode, :transactionResultMessage, :orderNumber, :timestamp, :hash, :program_year)
     end
 end
 
