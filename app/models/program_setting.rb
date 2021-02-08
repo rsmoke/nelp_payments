@@ -18,6 +18,7 @@
 #
 class ProgramSetting < ApplicationRecord
 
-    scope :active_program, -> { find_by(active: true) }
+    # need to setup loginc so ther is only ever one active application
+    scope :active_program, -> { where(active: true) }
 
 end
