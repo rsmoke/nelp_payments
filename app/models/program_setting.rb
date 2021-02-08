@@ -17,8 +17,25 @@
 #  updated_at           :datetime         not null
 #
 class ProgramSetting < ApplicationRecord
+    validates :program_year, presence: true, uniqueness: true
+    validates :program_open, :program_close, presence: true
+    validate :only_one_active_camp
 
-    # need to setup loginc so ther is only ever one active application
     scope :active_program, -> { where(active: true) }
 
+    def total_cost
+        self.program_fee + self.application_fee
+    end
+
+    def only_one_active_camp
+        return unless active?
+      
+        matches = ProgramSetting.active_program
+        if persisted?
+          matches = matches.where('id != ?', id)
+        end
+        if matches.exists?
+          errors.add(:active, 'cannot have another active program')
+        end
+      end
 end
