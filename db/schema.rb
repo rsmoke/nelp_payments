@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_225559) do
+ActiveRecord::Schema.define(version: 2021_02_04_211217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,41 @@ ActiveRecord::Schema.define(version: 2021_02_02_225559) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "transaction_type"
+    t.string "transaction_status"
+    t.string "transaction_id"
+    t.string "total_amount"
+    t.string "transaction_date"
+    t.string "account_type"
+    t.string "result_code"
+    t.string "result_message"
+    t.string "user_account"
+    t.string "payer_identity"
+    t.string "timestamp"
+    t.string "transaction_hash"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "program_year", null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
+  create_table "program_settings", force: :cascade do |t|
+    t.integer "program_year"
+    t.integer "application_fee", default: 0, null: false
+    t.integer "program_fee", default: 0, null: false
+    t.boolean "active", default: false
+    t.datetime "program_open"
+    t.datetime "program_close"
+    t.text "open_instructions"
+    t.text "close_instructions"
+    t.text "payment_instructions"
+    t.boolean "allow_payments", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -53,4 +88,5 @@ ActiveRecord::Schema.define(version: 2021_02_02_225559) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "payments", "users"
 end
