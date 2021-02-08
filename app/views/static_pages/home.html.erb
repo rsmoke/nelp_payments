@@ -1,1 +1,11 @@
-<h1 class="text-5xl font-bold text-center my-20">Your Instant Rails App Works!</h1>
+  <h1 class="text-5xl font-bold text-center my-20">
+  <% if @current_program %>
+    <% if current_program_open? %>
+      <%= @current_program.open_instructions %>
+    <% else %>
+      <%= @current_program.close_instructions %>
+    <% end %>
+  <% else %>
+    There are no active programs
+  <% end %>
+  </h1>
