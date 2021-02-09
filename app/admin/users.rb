@@ -16,6 +16,8 @@ ActiveAdmin.register User do
   #   permitted
   # end
 
+  scope :all
+  scope :zero_balance
   filter :email, as: :select
 
   index do
@@ -23,7 +25,6 @@ ActiveAdmin.register User do
     id_column
     column :email
     column "Balance Due" do |u|
-      # number_to_currency(current_program.total_cost - u.payments.pluck(:total_amount).sum(&:to_f) / 100) 
       number_to_currency(u.current_balance_due)
     end
     column :current_sign_in_at
