@@ -22,6 +22,8 @@
 #
 class Payment < ApplicationRecord
   belongs_to :user
+  validates :transaction_id, presence: true, uniqueness: true 
+  validates :total_amount, presence: true 
 
   scope :current_program_payments, -> { where(program_year: ProgramSetting.active_program.last.program_year)}
 end
