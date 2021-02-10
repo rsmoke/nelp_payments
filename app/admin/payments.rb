@@ -15,5 +15,53 @@ ActiveAdmin.register Payment do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+  actions :index, :show, :new, :create, :update, :edit
+
+  filter :user_id, as: :select, collection: User.all
+  filter :program_year, as: :select 
+  filter :account_type, as: :select
+  filter :created_at
+
+  form do |f| # This is a formtastic form builder
+    f.semantic_errors # shows errors on :base
+    f.inputs do
+      f.input :user_id, as: :select, collection: User.all
+      f.input :total_amount
+      li "Transaction Type #{f.object.transaction_type}" unless f.object.new_record?
+      f.input :transaction_type, input_html: {value: "1"} unless f.object.persisted?
+      li "Transaction Status #{f.object.transaction_status}" unless f.object.new_record?
+      f.input :transaction_status, input_html: {value: "1"} unless f.object.persisted?
+      f.input :transaction_id
+      f.input :account_type
+      f.input :result_message
+      f.input :transaction_date, input_html: {value: "#{DateTime.now.strftime('%Y%m%d%H%M')}"}
+      li "Camp Year #{f.object.program_year}" unless f.object.new_record?
+      f.input :program_year, input_html: {value: current_program.program_year} unless f.object.persisted?
+    end
+    f.actions         # adds the 'Submit' and 'Cancel' button
+  end
+
+  index do
+    column :user
+    column "Type" do |tt|
+      tt.transaction_type
+    end
+    column "Status" do |ts|
+      ts.transaction_status
+    end
+    column :transaction_id  
+    column "Total Amount" do |p|
+      number_to_currency(p.total_amount.to_f / 100)
+    end  
+    column :transaction_date
+    column :account_type    
+    column :result_code     
+    column :result_message  
+    column :user_account    
+    column :payer_identity  
+    column :timestamp       
+    column :program_year
+    actions
+  end
+
 end
