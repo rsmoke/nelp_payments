@@ -1,36 +1,21 @@
-    <header class="h-20 bg-green-700">
-      <nav class="flex items-center justify-between flex-wrap">
-        <div class="flex items-center flex-no-shrink text-white border border-green-700">
-          <%= image_pack_tag "english_logo.jpg", alt:"English Logo", size: "250x36"  %>
-        </div>
-        <div class="block lg:hidden">
-          <button class="flex items-center px-3 py-2 border rounded border-teal-light hover:text-white hover:border-white">
-            <svg class="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-          </button>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center text-gray-200  lg:w-auto">
-          <div class="text-sm lg:flex-grow">
-            <a href="#responsive-header" class="block mt-4 lg:inline-block no-underline hover:underline lg:mt-0 mr-4">
-              <%= link_to "About", about_path %>
-            </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block hover:underline lg:mt-0 mr-4">
-              <%= link_to "Privacy", privacy_path %>
-            </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block hover:underline lg:mt-0">
-              <%= link_to "Terms of Use", terms_path %>
-            </a>
-          </div>
-        </div>
-        <% if user_signed_in? %>
-          <div class="text-right">
-            <%= link_to current_user.email, edit_user_registration_path %>
-            |
-            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'text-right' %>
-          </div>
-        <% else %>
-          <div class="text-right">
-            <%= link_to 'Sign In', new_user_session_path %>
-          </div>
-        <% end %>
-      </nav>
-    </header>
+<header class="h-auto bg-green-700">
+  <nav class="text-white border border-green-700 flex items-center w-full">
+    <div class="flex-1">
+      <%= image_pack_tag "english_logo.jpg", alt:"English Logo", size: "250x36"  %>
+    </div>
+    <div class="flex-none">
+        <%= link_to "About", about_path, class: 'px-4' %>
+        <%= link_to "Privacy", privacy_path, class: 'px-4' %>
+        <%= link_to "Terms of Use", terms_path, class: 'px-4' %>
+    </div>
+    <div class="flex-1 text-right mr-4">
+      <% if user_signed_in? %>
+        <%= link_to current_user.email, edit_user_registration_path %>
+        |
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'text-right' %>
+      <% else %>
+        <%= link_to 'Sign In', new_user_session_path %>
+      <% end %>
+    </div>
+  </nav>
+</header>
