@@ -13,3 +13,5 @@ import "stylesheets/application.scss"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+const images = require.context('../images', true)

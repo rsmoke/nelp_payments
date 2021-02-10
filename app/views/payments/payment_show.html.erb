@@ -6,12 +6,12 @@
 
 <% if @users_current_payments.count < 1 %>
 
-  <h2> Please pay your <%= current_program.application_fee %> application fee.</h2>
+  <h2> Please pay your <%= number_to_currency(current_program.application_fee) %> application fee.</h2>
   <h6>Pay by Credit Card (Visa, Mastercard, Discover, AMEX)</h6>
-  <p>
+  <p class="my-2">
     You will be redirected to
     our credit card processing page where you will be asked to make your
-    non-refundable <%= current_program.application_fee %> application fee. Payments are securely processed via QuikPAY,
+    non-refundable <%= number_to_currency(current_program.application_fee) %> application fee. Payments are securely processed via QuikPAY,
     the preferred gateway service provider of the University of Michigan.
     QuikPAY is a registered trademark of Nelnet Business Solutions, Inc. No
     credit card information is stored on our servers.
@@ -19,36 +19,32 @@
     <%= button_to "Pay application fee", make_payment_path, params: {amount: current_program.application_fee.to_i }, class: 'btn btn-sm btn-success' %>
   </p>
 <% else %>
-  <h2> Your Payment Receipts</h2>
-  <p> 
-    You are required to pay the <%= current_program.application_fee %> application fee. If you are 
+  <h1 class="text-center">Your Payment Receipts</h1>
+  <p class="my-2"> 
+    You are required to pay the <%= number_to_currency(current_program.application_fee) %> application fee. If you are 
     accepted into the NELP program you are also required to pay an additional 
-    deposit of <%= current_program.program_fee %> (usually spread over two payments).
+    deposit of <%= number_to_currency(current_program.program_fee) %> (usually spread over two payments).
   </p>
-  <p>  
+  <p class="my-2">  
     There are other costs associated with the NELP program that are outlined
     <%= link_to "here", 'https://lsa.umich.edu/nelp/prospective-students/cost-financial-aid.html' %>
   </p>
-  <p>
-    You may email any questions to
-    <%= mail_to 'aknuth@umich.edu' %>
-  </p>
-  <hr class="w-75">
 
-  <div>
-    <p>
+  <div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <h5 class="bg-green-700 px-4 text-white">
       Account Summary
-    <div>
-      <p>
+    </h5>
+    <div class="p-4">
+      <div class="font-bold text-xs mb-2">
         <%= "#{'total_cost'.humanize.ljust(24, '.')} #{number_to_currency(@total_cost).rjust(12,'.')}" %>
-      </p>
-      <p>
+      </div>
+      <div class="font-bold text-xs mb-2">
         <%= "#{'amount_paid'.humanize.ljust(20, '.')} #{number_to_currency(@ttl_paid).rjust(12,'.')}" %>
-      </p>
-      <hr>
-      <p>
+      </div>
+      <hr class="w-75">
+      <div class="font-bold text-xs mb-2">
         <%= "#{'balance_due'.humanize.ljust(22, '.')} #{number_to_currency(@balance_due).rjust(12,'.')}" %>
-      </p>
+      </div>
     </div>
 
     <% if current_program.allow_payments && @balance_due.to_i > 0 %>
@@ -57,44 +53,48 @@
         <div>
           $
           <%= f.number_field :amount, value: "#{@balance_due.to_i}", within: 1..@balance_due.to_i , required: true %>
-          <%= f.submit "Pay Now", class: 'btn btn-sm btn-success ml-2' %>
+          <%= f.submit "Pay Now", class: 'btn btn-success ml-2' %>
         </div>
         <% end %>
       </div>
     <% end %>
   </div>
-  <hr class="w-75">
-  <h2>Your transactions:</h2>
-  <div>
-    <% @users_current_payments.each do |payment| %>
-    <p>
-      <%= "Transaction ID: #{payment.transaction_id}" %>
-    </p>
-    <p>
-      <ul>
-        <li>>
+
+  <hr class="w-75 m-4 "/>
+
+  <div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <h5 class="max-w-sm rounded-t text-white bg-green-700 px-4">Your transactions:</h5>
+    <div class="card-deck">
+      <% @users_current_payments.each do |payment| %>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <h6 class="text-green-700 px-2 py-2">
+            <%= "Transaction ID: #{payment.transaction_id}" %>
+          </h6>
+          <div class="ml-4 text-gray-700">
+            <p>
               <%= "Credit Card: #{payment.account_type}" %>
-        </li>
-        <li>Message:
-              <br>
-              <%= payment.result_message %>
-        </li>
-        <li>
+            </p>
+            <p>
+              <%= "Message: #{payment.result_message}" %>
+            </p>
+            <p>
               <%= "Amount: #{number_to_currency(payment.total_amount.to_f / 100 )}" %>
-        </li>
-        <li>
+            </p>
+            <p>
               <%= "Date: #{Time.parse(payment.transaction_date).strftime("%b %e, %Y at %l:%M %p")}" %>
-        </li>
-      </ul>
-    </p>
-    <% end %>
+            </p>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
   </div>
-  <p>
+  <p class="my-2">
     You will receive an email confirmation from
     'MerchantCreditCard&#64;umich.edu' for each transaction.
   </p>
 <% end %>
-  <p>
+  <p class="my-2">
     You may email any questions to
     <%= mail_to 'aknuth@umich.edu' %>
   </p>
