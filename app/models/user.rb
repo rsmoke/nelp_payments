@@ -25,8 +25,14 @@ class User < ApplicationRecord
 
   has_many :payments
 
+  scope :zero_balance, -> { where(id: User.all.map { |u| u if u.balance_due_zero? }.compact)}
+
   def current_balance_due
-    ProgramSetting.active_program.last.total_cost - self.payments.pluck(:total_amount).sum(&:to_f) / 100
+    ProgramSetting.active_program.last.total_cost - self.payments.current_program_payments.pluck(:total_amount).sum(&:to_f) / 100
+  end
+
+  def balance_due_zero?
+    self.current_balance_due.to_i == 0
   end
 
   def display_name

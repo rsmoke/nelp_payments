@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
     # private
     def current_program
-        @current_program ||= ProgramSetting.active_program.last unless nil
+        ProgramSetting.active_program.last unless nil
     rescue
         flash.now[:alert] = "There are no active programs!"
     end
@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
     helper_method :current_program
 
     def current_program_open?
-      if @current_program 
-        program_range = @current_program.program_open..@current_program.program_close
+      if current_program 
+        program_range = current_program.program_open..current_program.program_close
         program_range.include?(Time.now)
       end
     end

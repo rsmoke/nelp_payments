@@ -23,5 +23,5 @@
 class Payment < ApplicationRecord
   belongs_to :user
 
-  scope :current_program_payments, -> { where(program_year: ProgramSetting.active_program.program_year)}
+  scope :current_program_payments, -> { where(program_year: ProgramSetting.active_program.last.program_year)}
 end

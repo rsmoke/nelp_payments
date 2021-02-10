@@ -29,7 +29,7 @@ class PaymentsController < ApplicationController
         timestamp: params['timestamp'],
         transaction_hash: params['hash'],
         user_id: current_user.id,
-        program_year: @current_program.program_year
+        program_year: current_program.program_year
       )
 
       redirect_to all_payments_path, notice: "Your Payment Was Successfully Recorded"
@@ -42,14 +42,14 @@ class PaymentsController < ApplicationController
   end
 
   def payment_show
-    @total_cost = @current_program.program_fee.to_i  + @current_program.application_fee.to_i
-    @users_current_payments = Payment.where(program_year: @current_program.program_year, user_id: current_user )
-    @ttl_paid = Payment.where(program_year: @current_program.program_year, user_id: current_user, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+    @total_cost = current_program.program_fee.to_i  + current_program.application_fee.to_i
+    @users_current_payments = Payment.where(program_year: current_program.program_year, user_id: current_user )
+    @ttl_paid = Payment.where(program_year: current_program.program_year, user_id: current_user, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
     @balance_due = @total_cost - @ttl_paid
   end
 
   private
-    def generate_hash(current_user, amount=@current_program.application_fee.to_i)
+    def generate_hash(current_user, amount=current_program.application_fee.to_i)
       user_account = current_user.email.partition('@').first + '-' + current_user.id.to_s
       redirect_url = 'https://lsa-english-nelp.miserver.it.umich.edu/payment_receipt'
       amount_to_be_payed = amount.to_i

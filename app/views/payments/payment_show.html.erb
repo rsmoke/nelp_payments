@@ -1,29 +1,29 @@
 <% provide(:title, 'Payment Receipts') %>
 
 <h2>
-  <%= @current_program.payment_instructions unless nil %>
+  <%= current_program.payment_instructions unless nil %>
 </h2>
 
 <% if @users_current_payments.count < 1 %>
 
-  <h2> Please pay your <%= @current_program.application_fee %> application fee.</h2>
+  <h2> Please pay your <%= current_program.application_fee %> application fee.</h2>
   <h6>Pay by Credit Card (Visa, Mastercard, Discover, AMEX)</h6>
   <p>
     You will be redirected to
     our credit card processing page where you will be asked to make your
-    non-refundable <%= @current_program.application_fee %> application fee. Payments are securely processed via QuikPAY,
+    non-refundable <%= current_program.application_fee %> application fee. Payments are securely processed via QuikPAY,
     the preferred gateway service provider of the University of Michigan.
     QuikPAY is a registered trademark of Nelnet Business Solutions, Inc. No
     credit card information is stored on our servers.
 
-    <%= button_to "Pay application fee", make_payment_path, params: {amount: @current_program.application_fee.to_i }, class: 'btn btn-sm btn-success' %>
+    <%= button_to "Pay application fee", make_payment_path, params: {amount: current_program.application_fee.to_i }, class: 'btn btn-sm btn-success' %>
   </p>
 <% else %>
   <h2> Your Payment Receipts</h2>
   <p> 
-    You are required to pay the <%= @current_program.application_fee %> application fee. If you are 
+    You are required to pay the <%= current_program.application_fee %> application fee. If you are 
     accepted into the NELP program you are also required to pay an additional 
-    deposit of <%= @current_program.program_fee %> (usually spread over two payments).
+    deposit of <%= current_program.program_fee %> (usually spread over two payments).
   </p>
   <p>  
     There are other costs associated with the NELP program that are outlined
@@ -51,7 +51,7 @@
       </p>
     </div>
 
-    <% if @current_program.allow_payments && @balance_due.to_i > 0 %>
+    <% if current_program.allow_payments && @balance_due.to_i > 0 %>
       <div>
         <%= form_with url: make_payment_path, local: true do |f| %>
         <div>
