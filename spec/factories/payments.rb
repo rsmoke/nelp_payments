@@ -20,6 +20,8 @@
 #  updated_at         :datetime         not null
 #  program_year       :integer          not null
 #
+
+user = FactoryBot.build(:user, email: 'rita@test.com')
 FactoryBot.define do
   factory :payment do
     transaction_type { "MyString" }
@@ -34,6 +36,6 @@ FactoryBot.define do
     payer_identity { "MyString" }
     timestamp { "MyString" }
     transaction_hash { "MyString" }
-    user { nil }
+    user { user }
   end
 end

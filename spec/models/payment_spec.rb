@@ -23,5 +23,15 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  payment = FactoryBot.build(:payment)
+  it 'has a transaction_id' do
+    expect(payment).to be_valid
+  end
+
+  it 'has no transaction id' do
+    payment.transaction_id = ''
+    expect(payment).to_not be_valid
+  end
+
 end
