@@ -58,11 +58,15 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
-  gem 'rspec-rails'
+  # gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'faker'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'main' # Previously '4-0-dev' or '4-0-maintenance' branch
+end
+
 end
 gem 'devise'
 gem 'simple_form'
