@@ -18,15 +18,15 @@
 #
 FactoryBot.define do
   factory :program_setting do
-    program_year { 1 }
-    program_fee { 1 }
-    active { false }
+    program_year { 2021 }
+    program_fee { 500 }
+    active { true }
     program_open { "2021-02-04 20:51:07" }
     program_close { "2021-02-04 20:51:07" }
-    application_fee { 1 }
+    application_fee { 35 }
     open_instructions { "MyText" }
     close_instructions { "MyText" }
     payment_instructions { "MyText" }
-    allow_payments { "" }
+    allow_payments { false }
   end
 end

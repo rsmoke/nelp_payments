@@ -3,6 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Signing in", type: :system do
+  let!(:current) { FactoryBot.create(:program_setting) }
   let!(:user) { FactoryBot.create(:user) }
 
   context "valid credentials" do
@@ -12,7 +13,8 @@ RSpec.describe "Signing in", type: :system do
       fill_in "Password", with: user.password
 
       click_on "Log in"
-      expect(page).to have_content("Sign Out")
+      expect(page).to have_content("You may email any questions")
+      # expect(response).to redirect_to(all_payments_url)
     end
   end
 
@@ -23,7 +25,7 @@ RSpec.describe "Signing in", type: :system do
       fill_in "Password", with: "invalid"
 
       click_on "Log in"
-      expect(page).to have_content("Sign In")
+      expect(page).to have_content("Invalid Email or password")
     end
   end
 end
