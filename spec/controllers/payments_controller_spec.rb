@@ -8,7 +8,7 @@ RSpec.describe PaymentsController, type: :controller do
     # let(:valid_attributes) {
     #     { :title => "Test title!", :description => "This is a test description", :status => "draft" }
     # }
-    login_user
+    login_admin
 
     let(:valid_session) { {} }
 
@@ -21,6 +21,8 @@ RSpec.describe PaymentsController, type: :controller do
             expect(response).to have_http_status(302) # Expects a HTTP Status code of 302
         end
     end
+
+    login_user
 
     describe "GET #payment_receipt" do
         it "returns a success response" do
