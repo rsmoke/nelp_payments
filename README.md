@@ -1,8 +1,8 @@
 # README
+- Install Docker
 ## This template has Rails / ActiveAdmin / Devise
-
 Static pages for
-- Aboout
+- About
 - Privacy
 - Terms of use
 ## Useful bits
