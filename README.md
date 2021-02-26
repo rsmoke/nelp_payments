@@ -1,8 +1,8 @@
 # README
+- Install Docker
 ## This template has Rails / ActiveAdmin / Devise
-
 Static pages for
-- Aboout
+- About
 - Privacy
 - Terms of use
 ## Useful bits
@@ -11,6 +11,7 @@ Static pages for
 - ```docker-compose run --rm web bundle```
 - ```docker-compose run --rm web rails db:create```
 - ```docker-compose run --rm web rails db:migrate```
+- ```docker-compose run --rm web rails db:seed```
 - ```docker-compose run --rm web yarn```
 - ```docker-compose up```
 
