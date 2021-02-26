@@ -4,7 +4,7 @@ require 'time'
 class PaymentsController < ApplicationController
   devise_group :logged_in, contains: [:user, :admin_user]
   before_action :authenticate_logged_in!
-  before_action :authenticate_admin!, only: [:index, :destroy]
+  before_action :authenticate_admin_user!, only: [:index, :destroy]
 
   def index
     redirect_to root_url and return unless admin_user_signed_in?
