@@ -6,15 +6,14 @@ RSpec.describe "Signing in", type: :system do
   let!(:current) { FactoryBot.create(:program_setting) }
   let!(:user) { FactoryBot.create(:user) }
 
-  context "valid credentials" do
+  describe "valid credentials" do
     it "signs the user in" do
       visit new_user_session_path
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
 
       click_on "Log in"
-      expect(page).to have_content("You may email any questions")
-      # expect(response).to redirect_to(all_payments_url)
+      expect(page).to have_content("NELP Payments")
     end
   end
 
