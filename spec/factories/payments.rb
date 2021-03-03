@@ -34,6 +34,6 @@ FactoryBot.define do
     payer_identity { "MyString" }
     timestamp { "MyString" }
     transaction_hash { "MyString" }
-    user { nil }
+    user
   end
 end

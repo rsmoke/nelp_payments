@@ -13,7 +13,7 @@ RSpec.describe "Signing in", type: :system do
       fill_in "Password", with: user.password
 
       click_on "Log in"
-      expect(page).to have_content("NELP Payments")
+      expect(page).to have_content("Sign Out")
     end
   end
 

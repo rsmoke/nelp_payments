@@ -1,9 +1,13 @@
 require "rails_helper"
 
 RSpec.describe PaymentsController, type: :system do
+  before do
+    @me = FactoryBot.create(:user)
+    login_as(@me)
+  end
   let!(:current) { FactoryBot.create(:program_setting) }
   let!(:user) { FactoryBot.create(:user) }
-  let!(:payment) { FactoryBot.create(:payment { user: user }) }
+  # let!(:payment) { FactoryBot.create(:payment { user: user }) }
 
   context "user signed in with no payments" do
     it "check for application payment due" do
