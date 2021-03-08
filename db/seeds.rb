@@ -6,5 +6,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-ProgramSetting.create!(program_year: 2021, active: true) if Rails.env.development?
+ProgramSetting.create!(program_year: 2021, program_open: DateTime.now, program_close: 2.days.from_now, active: true, ) if Rails.env.development?
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
