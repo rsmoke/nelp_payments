@@ -19,8 +19,10 @@ Static pages for
 ```
 docker-compose up --build
 ````
+
 ### If your app is ugly run
-```docker-compose run --rm web yarn```
+```docker-compose run --rm web yarn upgrade```
+
 ### Inirtial ADMIN account (CHANGE THIS)
 ```USER_ID: admin@example.com PWD: password```
 
